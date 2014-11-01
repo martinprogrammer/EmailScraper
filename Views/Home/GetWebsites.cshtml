@@ -1,0 +1,36 @@
+﻿@model IEnumerable<EmailScraper.Models.WebsiteToScrape>
+
+@{
+    ViewBag.Title = "GetWebsites";
+}
+
+<h2>GetWebsites</h2>
+<p>
+    Number of websites: @ViewBag.NumberOfWebsites
+</p>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.WebAddress)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.WebAddress)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.WebsiteToScrapeID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.WebsiteToScrapeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.WebsiteToScrapeID })
+        </td>
+    </tr>
+}
+
+</table>
