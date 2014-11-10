@@ -38,13 +38,16 @@ namespace EmailScraper.Logic
             }
         }
 
-        public void AddEmail(string theEmail)
+        public void AddEmail(ScrapeDetail theDetail)
         {
-            myContext.PagesToScrape.Add(new ScrapeDetail
-            {
-                Email = theEmail
-            });
+            myContext.PagesToScrape.Add(theDetail);
             myContext.SaveChanges();
         }
+
+        public IEnumerable<string> GetEmails()
+        {
+            return myContext.PagesToScrape.Select(p => p.Email);
+        }
+
     }
 }

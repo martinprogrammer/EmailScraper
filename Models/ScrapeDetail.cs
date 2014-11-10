@@ -10,8 +10,7 @@ namespace EmailScraper.Models
     {
         [Key]
         public int ScrapeDetailID { get; set; }
-        public int WebsiteToScrapeID {get; set;}
-        public virtual WebsiteToScrape WebsiteDetails { get; set; }
+        
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Company { get; set; }

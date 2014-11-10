@@ -57,17 +57,38 @@ namespace EmailScraper.Controllers
                 {
                     List<ScrapeDetail> theEmails = myRegex.GetRegexForValues(page, "(mailto:)(\\S+@\\S+)\"");
                     CleanEmails.AddRange(theEmails);
-                    CleanEmails.RemoveAll(p=>p.Email == "info@odv-zb.si");
+                    CleanEmails.RemoveAll(p => p.Email == "info@odv-zb.si");
                 }
             }
 
+
+            using (DatabaseActions dBActions = new DatabaseActions())
+            {
+                CleanEmails.ForEach(p => { dBActions.AddEmail(p); });
+            }
+
+
+
             ViewBag.NumberOfEmails = CleanEmails.Count;
             return View(CleanEmails);
-            
+
         }
 
         public ActionResult SendEmails()
         {
+
+
+            using (DatabaseActions myDb = new DatabaseActions())
+            {
+                var emails = myDb.GetEmails();
+                using (EmailActions myEmail = new EmailActions())
+                {
+                    foreach (var email in emails)
+                    {
+                        myEmail.SendEmail(myEmail.PrepareEmail(email));
+                    }
+                }
+            }
             ViewBag.Message = "Your contact page.";
 
             return View();
